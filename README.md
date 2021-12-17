@@ -6,7 +6,7 @@
 2. Run bookstoreDDL.sql file inside the SQL folder (in pgadmin4)
 3. Run bookstoreRelations.sql file inside the SQL folder (in pgadmin4)
 4. Run triggerFunction.sql file inside the SQL folder (in pgadmin4)
-5. Compile bookstore.java (we used command line **instructions below**)
+5. Compile bookstore.java in bookstore folder(we used command line **instructions below**)
 6. To run the book store use java in command line, **instructions below**
 
 
