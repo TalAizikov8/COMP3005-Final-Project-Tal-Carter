@@ -11,11 +11,11 @@
 
 
 ##### To compile bookstore.java
-1. open command line in the folder where the repository is saved
+1. open command line in the folder where the bookstore.java is saved
 2. type javac bookstore.java
 
 ##### To run bookstore.java
-1. open command line in the folder where the repository is saved
+1. open command line in the folder where the bookstore.java is saved
 2. run java -cp "path to postgresql-42.3.1;path to bookstore.class file" bookstore
 ###### Please note you might have to download a different version of postgresql JDBC driver (most likely not on newer systems)
 
