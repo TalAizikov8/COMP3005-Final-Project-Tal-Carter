@@ -40,10 +40,10 @@ insert into book values (default, 30000000, 40000001, 'The Universe and Beyond',
 insert into book values (default, 30000001, 40000001, 'Databases for Dummies', 'Computer-Science','Day Tah',  777, 99.99, 50, 0.5);
 --This is a table which shows which owner and publisher are in contact
 ----If an owner has a book from a publisher they will be in contact, it also does that in the java
-insert into contact values (40000000, 30000000);
-insert into contact values (40000001, 30000000);
-insert into contact values (40000000, 30000001);
-insert into contact values (40000001, 30000001);
+insert into contacts values (40000000, 30000000);
+insert into contacts values (40000001, 30000000);
+insert into contacts values (40000000, 30000001);
+insert into contacts values (40000001, 30000001);
 
 --Note some tables have not been inserted to. Specificaly report, c_order, book_into_basket
 ----This is because no orders have been made. Orders should be made through the java (aka actual book store)
