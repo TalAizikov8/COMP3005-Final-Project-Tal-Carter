@@ -11,8 +11,9 @@
 
 
 ##### To compile bookstore.java
-1. open command line in the folder where the bookstore.java is saved
-2. type javac bookstore.java
+1. Change line 7 with your pgadmin4 password 
+2. open command line in the folder where the bookstore.java is saved
+3. type javac bookstore.java
 
 ##### To run bookstore.java
 1. open command line in the folder where the bookstore.java is saved
