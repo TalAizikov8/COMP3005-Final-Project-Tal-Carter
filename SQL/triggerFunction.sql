@@ -7,7 +7,7 @@ begin
 	update report
 	set expense_amount = expense_amount + price_sum.total from price_sum
 	where report.date = NEW.date;
-	
+--test
 	update report
 	set profit_amount = profit_amount + (select price from c_order where order_id = new.order_id)
 	where report.date = NEW.date;
