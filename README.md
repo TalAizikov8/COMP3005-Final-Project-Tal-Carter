@@ -13,7 +13,7 @@
 
 ##### To compile bookstore.java
 1. Change line 7 with your pgadmin4 password 
-2. Make sure line 48 and line 351 have the same name at the data base (ex Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost/COMP3005FinalProject", userid, passwd);     <---- the name of the data base must be COMP3005FinalProject
+2. Make sure line 48 and line 355 have the same name at the data base (ex Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost/COMP3005FinalProject", userid, passwd);     <---- the name of the data base must be COMP3005FinalProject
 3. open command line in the folder where the bookstore.java is saved
 4. type javac bookstore.java
 
