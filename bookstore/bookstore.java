@@ -4,7 +4,7 @@ import java.sql.*;
 public class bookstore {
     String JDBC_DRIVER = "org.postgresql.Driver";
     static final String userid = "postgres";
-    static final String passwd = "****"; //password will need to be adjusted
+    static final String passwd = "Ta150555"; //password will need to be adjusted
 
     static int date;
 
@@ -188,7 +188,11 @@ public class bookstore {
                         rset.next();
                         order_id = rset.getString("order_id");
                     } else {
+                        
                         order_id = rset.getString("order_id");
+                        stmt.executeUpdate(
+                            "update c_order set date =" +date+"where order_id ="+ order_id //if not, create a new order (this order is used to keep track of the user's basket)
+                        );
                         System.out.print("Loading your cart...\n");
                         rset = stmt.executeQuery(
                             "SELECT * FROM (book NATURAL JOIN book_into_basket) WHERE order_id = " + order_id //get information about the books in the basket
@@ -225,11 +229,11 @@ public class bookstore {
                             stmt.executeUpdate (//update the price of the order from the calculation done below
                                 "WITH price_sum AS (SELECT SUM(sums.price*amount_sold) as total FROM (SELECT price, amount_sold FROM (book NATURAL JOIN book_into_basket) WHERE order_id = " + order_id +") as sums) UPDATE c_order SET price = price_sum.total from price_sum WHERE order_id = " + order_id
                             );
-                            stmt.executeUpdate ( //update the inventory of the order
-                                "WITH books AS (SELECT isbn, amount_sold FROM book_into_basket WHERE order_id = " + order_id + ") UPDATE book set inventory = inventory - amount_sold FROM books WHERE books.isbn = book.isbn"
-                            );
                             stmt.executeUpdate (//change the status of the order 
                                 "UPDATE c_order SET status = 'Pending' WHERE order_id = " + order_id
+                            );
+                            stmt.executeUpdate ( //update the inventory of the order
+                                "WITH books AS (SELECT isbn, amount_sold FROM book_into_basket WHERE order_id = " + order_id + ") UPDATE book set inventory = inventory - amount_sold FROM books WHERE books.isbn = book.isbn"
                             );
                             System.out.println("Your order is being shipped!");
                             System.out.println("Your order number is "+ order_id);
