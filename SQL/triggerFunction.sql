@@ -23,31 +23,46 @@ for each row execute function update_profit_fun();
 
 
 create function books_threshold_fun() returns trigger as $books_threshold$
-begin
---when inventory is less than 5 then we order more inventory based on books sold in last month
-    if (new.inventory < 5) then
-    Update book
-    set inventory = inventory + 
-    --select the amount of books sold based books which have been ordered last month and which match the new ISBN
-    (select amount_sold
+begin 
+--the first if statement is to make sure that if not books were ordered in the last month it wont try to add null books
+	if (select COALESCE(amount_sold,0)
     from (select ISBN, amount_sold
-        From (select CAST(SUBSTRING(date, 3,2) as int) as month, ISBN, amount_sold from
+        From (select CAST(SUBSTRING(date, 5,2) as int) as month, ISBN, amount_sold from
         (Select date, ISBN, amount_sold
          from book_into_basket natural join c_order
-		where status!='In Basket') as dates) as s
+        where status!='In Basket') as dates) as s
 Where 
     s.month =
-    ((SELECT  CAST(SUBSTRING(date, 3,2) as int) as month from
-      	--the query below find the latest date and subtracts 1
+    ((SELECT  CAST(SUBSTRING(date, 5,2) as int) as month from
         (Select date
         From (Select order_id, date
             From c_order 
             where order_id = (select MAX(order_id) from c_order)) as da) as d)-1)) as date
-    where new.ISBN = ISBN);
+    where new.ISBN = ISBN) != 0 then
+    if (new.inventory < 5) then 
+    Update book --update the book based on the amount of books that were sold in the last month
+    set inventory= inventory + 
+    (select amount_sold
+    from (select ISBN, amount_sold
+        From (select CAST(SUBSTRING(date, 5,2) as int) as month, ISBN, amount_sold from
+        (Select date, ISBN, amount_sold
+         from book_into_basket natural join c_order
+        where status!='In Basket') as dates) as s
+Where 
+    s.month =
+    ((SELECT  CAST(SUBSTRING(date, 5,2) as int) as month from
+        (Select date
+        From (Select order_id, date
+            From c_order 
+            where order_id = (select MAX(order_id) from c_order)) as da) as d)-1)) as date
+    where new.ISBN = ISBN)
+	where new.ISBN = ISBN;
     end if;
-	return new;
+	end if;
+    return new;
 end;
 $books_threshold$ language plpgsql;
---create trigger for the function above
+
 create trigger books_threshold after update of inventory on book
     for each row execute function books_threshold_fun();
+  
