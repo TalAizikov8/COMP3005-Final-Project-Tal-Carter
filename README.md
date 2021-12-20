@@ -22,3 +22,5 @@
 2. run java -cp "path to postgresql-42.3.1;path to the folder which contains bookstore.class file" bookstore
 ###### Please note you might have to download a different version of postgresql JDBC driver (most likely not on newer systems)
 
+##### We used a lot of queries inside the java, all of their functionality is commented in the java
+
